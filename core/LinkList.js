@@ -132,6 +132,51 @@ var LinkList = /** @class */ (function () {
             }
         }
     };
+    /**
+     *
+     * @param {T} val
+     * @param {T} after--在节点之前插入数据
+     * @returns {boolean}
+     */
+    LinkList.prototype.insertBefore = function (val, after) {
+        var newNode = new Node(val);
+        //构建一个伪节点用于比较值，或者通过这个值去找节点
+        var afterNode = new Node(after);
+        var currentNode = this._tail;
+        //如果没有头部节点代表不没有初始化
+        if (!currentNode) {
+            return false;
+        }
+        else {
+            //用头部节点指针一直往上走，直到找到prev节点
+            while (true) {
+                //比较2个节点是否相等的方法
+                var isEqual = this._isEqual(currentNode, afterNode);
+                if (isEqual) {
+                    newNode.prev = currentNode.prev;
+                    newNode.next = currentNode;
+                    currentNode.prev = newNode;
+                    //判断新节点后还有没有值，有可能是在节点尾部插入的
+                    if (newNode.prev) {
+                        newNode.prev.next = newNode;
+                    }
+                    else {
+                        this._head = newNode;
+                    }
+                    this._length++;
+                    break;
+                }
+                else {
+                    if (currentNode.prev) {
+                        currentNode = currentNode.prev;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+        }
+    };
     Object.defineProperty(LinkList.prototype, "isEqual", {
         get: function () {
             return this._isEqual;

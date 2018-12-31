@@ -92,43 +92,91 @@ export default class LinkList<T>{
      */
     insert(val:T,prev:T){
 
-         let newNode = new Node(val);
+        let newNode = new Node(val);
 
-         //构建一个伪节点用于比较值，或者通过这个值去找节点
-         let prevNode = new Node(prev);
+        //构建一个伪节点用于比较值，或者通过这个值去找节点
+        let prevNode = new Node(prev);
 
-         let currentNode:Node<T> = this._head;
-         //如果没有头部节点代表不没有初始化
-         if(!currentNode){
-             return false;
-         }else{
-           //用头部节点指针一直往下走，直到找到prev节点
-           while (true){
-               //比较2个节点是否相等的方法
-               const isEqual = this._isEqual(currentNode, prevNode);
-               if( isEqual ){
-                   newNode.next = currentNode.next;
-                   newNode.prev = currentNode;
-                   currentNode.next = newNode;
+        let currentNode:Node<T> = this._head;
+        //如果没有头部节点代表不没有初始化
+        if(!currentNode){
+            return false;
+        }else{
+            //用头部节点指针一直往下走，直到找到prev节点
+            while (true){
+                //比较2个节点是否相等的方法
+                const isEqual = this._isEqual(currentNode, prevNode);
+                if( isEqual ){
+                    newNode.next = currentNode.next;
+                    newNode.prev = currentNode;
+                    currentNode.next = newNode;
 
-                   //判断新节点后还有没有值，有可能是在节点尾部插入的
-                   if(newNode.next){
-                       newNode.next.prev = newNode;
-                   }else{
-                       this._tail = newNode;
-                   }
-                   this._length++;
-                   break;
-               }else{
-                   if(currentNode.next){
-                       currentNode = currentNode.next;
-                   }else {
-                       return false;
-                   }
-               }
-           }
+                    //判断新节点后还有没有值，有可能是在节点尾部插入的
+                    if(newNode.next){
+                        newNode.next.prev = newNode;
+                    }else{
+                        this._tail = newNode;
+                    }
+                    this._length++;
+                    break;
+                }else{
+                    if(currentNode.next){
+                        currentNode = currentNode.next;
+                    }else {
+                        return false;
+                    }
+                }
+            }
 
-         }
+        }
+
+    }
+
+    /**
+     *
+     * @param {T} val
+     * @param {T} after--在节点之前插入数据
+     * @returns {boolean}
+     */
+    insertBefore(val:T,after:T){
+
+        let newNode = new Node(val);
+
+        //构建一个伪节点用于比较值，或者通过这个值去找节点
+        let afterNode = new Node(after);
+
+        let currentNode:Node<T> = this._tail;
+        //如果没有头部节点代表不没有初始化
+        if(!currentNode){
+            return false;
+        }else{
+            //用头部节点指针一直往上走，直到找到prev节点
+            while (true){
+                //比较2个节点是否相等的方法
+                const isEqual = this._isEqual(currentNode, afterNode);
+                if( isEqual ){
+                    newNode.prev = currentNode.prev;
+                    newNode.next = currentNode;
+                    currentNode.prev = newNode;
+
+                    //判断新节点后还有没有值，有可能是在节点尾部插入的
+                    if(newNode.prev){
+                        newNode.prev.next = newNode;
+                    }else{
+                        this._head = newNode;
+                    }
+                    this._length++;
+                    break;
+                }else{
+                    if(currentNode.prev){
+                        currentNode = currentNode.prev;
+                    }else {
+                        return false;
+                    }
+                }
+            }
+
+        }
 
     }
     public set isEqual(func:Function){
