@@ -1,6 +1,11 @@
 /**双向节点类型
  * https://github.com/sfkiwi/linked-list-typescript/blob/master/src/index.ts
  * **/
+export interface NodeProps<T>{
+    data:T;
+    next?:Node<T>;
+    prev?:Node<T>;
+}
 export class Node<T>{
   data:T;
   next?:Node<T>;
@@ -55,7 +60,7 @@ export default class LinkList<T>{
             //节点闭环 把头节点的上一个节点指向最后新加的节点
             newNode.prev = this._tail;
 
-            //把新家的节点作为头部节点
+            //把新加的节点作为头部节点
             this._tail = newNode;
         }
         // 标志数据长度+1
@@ -68,22 +73,22 @@ export default class LinkList<T>{
        });
     }
 
-    *iterator(): IterableIterator<T> {
-        let currentItem = this._head;
+    print( callback ){
+        let currentNode = this._head;
+        while (currentNode){
+            if(typeof callback === 'function'){
+                callback( currentNode );
+            }else{
+                console.log(currentNode.data);
+            }
 
-        while(currentItem) {
-            yield currentItem.data;
-            currentItem = currentItem.next
+            currentNode = currentNode.next;
         }
-    }
-
-    [Symbol.iterator]() {
-        return this.iterator();
     }
     /**
      * 在给定节点值后的节点插入一个数据
      * @param val --插入的值
-     * @param prev--上一个节点的值
+     * @param prev--上一个节点的值-要在这个节点之后插入数据
      */
     insert(val:T,prev:T){
 
@@ -97,9 +102,11 @@ export default class LinkList<T>{
          if(!currentNode){
              return false;
          }else{
-           //用头部节点指针一直往下走，知道找到prev节点
+           //用头部节点指针一直往下走，直到找到prev节点
            while (true){
-               if( this._isEqual(currentNode,prevNode) ){
+               //比较2个节点是否相等的方法
+               const isEqual = this._isEqual(currentNode, prevNode);
+               if( isEqual ){
                    newNode.next = currentNode.next;
                    newNode.prev = currentNode;
                    currentNode.next = newNode;
@@ -111,7 +118,7 @@ export default class LinkList<T>{
                        this._tail = newNode;
                    }
                    this._length++;
-                   return true;
+                   break;
                }else{
                    if(currentNode.next){
                        currentNode = currentNode.next;
