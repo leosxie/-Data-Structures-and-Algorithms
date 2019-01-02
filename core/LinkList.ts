@@ -24,7 +24,6 @@ export default class LinkList<T>{
     private _tail:Node<T> = null;
     private _length:number = 0;
     private _isEqual:Function = function(prevNode:Node<T>,nextNode:Node<T>){
-        console.log(prevNode.data === nextNode.data);
         return prevNode.data === nextNode.data;
     };
 
@@ -176,6 +175,43 @@ export default class LinkList<T>{
                 }
             }
 
+        }
+
+    }
+
+    /**
+     * 给定节点的值，查找节点
+     * @param nodeValue
+     */
+    findNode(nodeValue:T):(Node<T> | boolean){
+        let toFindNode:Node<T> = new Node(nodeValue);
+        let currentNode = this._head;
+        let isFind = false;
+        if( !currentNode ){
+            return false;
+        }
+        while (true){
+
+            const isEqual = this.isEqual(toFindNode,currentNode);
+            if(isEqual){
+                toFindNode = currentNode;
+                isFind = true;
+                break;
+            }else{
+                if(currentNode.next){
+                    currentNode = currentNode.next;
+                }else{
+                    break;
+                }
+
+            }
+
+        }
+
+        if( isFind ){
+            return toFindNode;
+        }else{
+            return false;
         }
 
     }

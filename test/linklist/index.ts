@@ -14,4 +14,11 @@ t.insertBefore(0,1);
 t.print((node:NodeProps<number>)=>{
    console.log( 'hello:',node.data );
 });
-console.log(t.head,t.tail);
+let c:(Node<number>|boolean) = t.findNode(10);
+if(!c ){
+    console.log('没有找到');
+}else{
+    console.log((c as Node<number>).data);
+}
+
+// console.log(t.head,t.tail);

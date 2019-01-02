@@ -22,7 +22,6 @@ var LinkList = /** @class */ (function () {
         this._tail = null;
         this._length = 0;
         this._isEqual = function (prevNode, nextNode) {
-            console.log(prevNode.data === nextNode.data);
             return prevNode.data === nextNode.data;
         };
         datas.forEach(function (data) {
@@ -175,6 +174,40 @@ var LinkList = /** @class */ (function () {
                     }
                 }
             }
+        }
+    };
+    /**
+     * 给定节点的值，查找节点
+     * @param nodeValue
+     */
+    LinkList.prototype.findNode = function (nodeValue) {
+        var toFindNode = new Node(nodeValue);
+        var currentNode = this._head;
+        var isFind = false;
+        if (!currentNode) {
+            return false;
+        }
+        while (true) {
+            var isEqual = this.isEqual(toFindNode, currentNode);
+            if (isEqual) {
+                toFindNode = currentNode;
+                isFind = true;
+                break;
+            }
+            else {
+                if (currentNode.next) {
+                    currentNode = currentNode.next;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        if (isFind) {
+            return toFindNode;
+        }
+        else {
+            return false;
         }
     };
     Object.defineProperty(LinkList.prototype, "isEqual", {
