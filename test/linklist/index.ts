@@ -7,4 +7,4 @@ t.isEqual = function (prev:Node<number>,next:Node<number>) {
 
     return prev.data === next.data;
 };
-t.print();
+console.log(t.toArray());

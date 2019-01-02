@@ -71,18 +71,32 @@ export default class LinkList<T>{
        });
        const _this = this;
     }
+    /**
+     * 主要是用来迭代用的，for of
+     * var c = {};
+     * c[Symbo.iterator] = function*(){
+     *    yield data1;
+     *    yield data2;
+     *    ......
+     * }
+     * console.log([...c]);
+     * 
+     */
     *iterator(): IterableIterator<T> {
-        let currentItem = this._head;
+        let currentNode = this._head;
     
-        while(currentItem) {
-          yield currentItem.data
-          currentItem = currentItem.next
+        while( currentNode ) {
+          yield currentNode.data
+          currentNode = currentNode.next
         }
       }
     
-      [Symbol.iterator]() {
+    [Symbol.iterator]() {
         return this.iterator();
-      }
+    }
+    toArray():T[]{
+        return [...this];
+    }
     print( callback?:Function ){
         let currentNode = this._head;
         while (currentNode){

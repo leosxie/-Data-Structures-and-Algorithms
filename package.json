@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "stest": "node lib/test/linklist/index.js"
   },
   "author": "",
   "license": "ISC",
