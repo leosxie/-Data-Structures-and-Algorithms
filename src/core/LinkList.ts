@@ -15,9 +15,8 @@ export class Node<T>{
       this.next = null;
       this.prev = null;
   }
-
 }
-//双向列表
+//双向列表2
 export default class LinkList<T>{
     //哨兵检测
     private _head:Node<T> = null;
@@ -70,9 +69,21 @@ export default class LinkList<T>{
        datas.forEach((data)=>{
            this._add(data);
        });
+       const _this = this;
     }
-
-    print( callback ){
+    *iterator(): IterableIterator<T> {
+        let currentItem = this._head;
+    
+        while(currentItem) {
+          yield currentItem.data
+          currentItem = currentItem.next
+        }
+      }
+    
+      [Symbol.iterator]() {
+        return this.iterator();
+      }
+    print( callback?:Function ){
         let currentNode = this._head;
         while (currentNode){
             if(typeof callback === 'function'){

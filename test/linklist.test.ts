@@ -1,4 +1,4 @@
-import LinkList, {Node, NodeProps} from '../core/LinkList'
+import LinkList, {Node, NodeProps} from '../src/core/LinkList'
 
 
 let t = new LinkList(1,2,4,6);

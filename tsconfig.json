@@ -5,7 +5,15 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "allowJs": true,
-    "target": "es5"
-  }
+    "declaration": true,
+    "target": "es6",
+    "watch": true,
+    "skipLibCheck": true,
+    "outDir": "lib/",
+  },
+  "compileOnSave": true,
+  "include": [
+    "./src/**/*",
+    "./test/**/*"
+  ]
 }
