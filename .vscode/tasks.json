@@ -5,17 +5,20 @@
     "tasks": [
         {
             "type": "typescript",
+            "label": "project auto build",
             "tsconfig": "tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ]
         },
         {
+            "label": "run test",
             "type": "npm",
             "script": "test",
             "problemMatcher": []
         },
         {
+            "label": "run self test",
             "type":"npm",
             "script": "stest"
         }

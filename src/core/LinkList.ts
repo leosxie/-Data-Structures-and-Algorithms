@@ -117,7 +117,9 @@ export default class LinkList<T> {
   insert(val: T, prev: T, allowRepeat: boolean= true):boolean {
 
     const newNode = new Node(val);
-
+    if (!allowRepeat && this.checkExist(val)) {
+      throw new Error(`插入的值:【${JSON.stringify(val)}】已经存在`);
+    }
         // 构建一个伪节点用于比较值，或者通过这个值去找节点
     const prevNode = new Node(prev);
 
@@ -159,15 +161,18 @@ export default class LinkList<T> {
   }
 
     /**
-     *
+     * 在某个节点之前插入数据
      * @param {T} val
      * @param {T} after--在节点之前插入数据
+     * @param allowRepeat 是否允许重复插入，默认是true
      * @returns {boolean}
      */
-  insertBefore(val: T, after: T) {
+  insertBefore(val: T, after: T, allowRepeat: boolean = true) {
 
     const newNode = new Node(val);
-
+    if (!allowRepeat && this.checkExist(val)) {
+      throw new Error(`插入的值:【${JSON.stringify(val)}】已经存在`);
+    }
         // 构建一个伪节点用于比较值，或者通过这个值去找节点
     const afterNode = new Node(after);
     let insertSuccess = true;
