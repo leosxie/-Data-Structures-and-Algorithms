@@ -1,4 +1,5 @@
-import LinkList, {Node, NodeProps} from '../../src/core/LinkList'
+
+import LinkList,{Node} from "../../src/core/LinkList";
 
 
 let t = new LinkList(1,2,4,6);
@@ -7,4 +8,7 @@ t.isEqual = function (prev:Node<number>,next:Node<number>) {
 
     return prev.data === next.data;
 };
-console.log(t.toArray());
+if(t.checkExist(2)){
+    console.log('存在');
+}
+

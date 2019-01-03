@@ -10,6 +10,8 @@
     "watch": true,
     "skipLibCheck": true,
     "outDir": "lib/",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
   },
   "compileOnSave": true,
   "include": [
