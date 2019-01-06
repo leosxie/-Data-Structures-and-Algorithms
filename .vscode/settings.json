@@ -13,5 +13,6 @@
     "tslint.trace.server": "verbose",
     "tslint.alwaysShowRuleFailuresAsWarnings": false,
     "tslint.configFile": "tslint.json",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "files.autoSave": "afterDelay"
 }

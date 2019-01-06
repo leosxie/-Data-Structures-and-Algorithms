@@ -16,9 +16,13 @@ export interface SingleNodeProps<T>{
 
 export default class SingleNodeList<T>{
   private _head: SingleNode<T> = null;
+  private _tail: SingleNode<T> = null;
   private _length: number = 0;
   public get head() {
     return this._head;
+  }
+  public get tail() {
+    return this._tail;
   }
   public get length() {
     return this._length;
@@ -27,9 +31,10 @@ export default class SingleNodeList<T>{
   private _add(data:T): void {
     const newNode = new SingleNode(data);
     if (!this._head) {
-      this._head = newNode;
+      this._head = this._tail = newNode;
     }else {
-      this._head.next = newNode;
+      this._tail.next = newNode;
+      this._tail = newNode;
     }
     this._length = this._length + 1;
   }
@@ -130,4 +135,50 @@ export default class SingleNodeList<T>{
     return insertSuccess;
 
   }
+  /**
+   * @param type:number 反转的类型 1代表使用就地反转 2 代表使用新建链表插入反转
+   *  */
+  reverseList(type:number = 1) {
+    if (type === 1) {
+      this._LocalReverse();
+    }else {
+      this._newListReverse();
+    }
+  }
+  /**
+   * 就地反转单链
+   * headPrevNode 在头节点之前构建一个空节点用于指向头节点
+   * preNode 待反转节点的前一个节点
+   * reverseNode 要发转的节点
+   * 当要反转的节点为空的时候，就代表反转完成
+   * 第一个节点就是头节点
+   * 反转的第一个节点就是反转后的尾节点
+   */
+  private _LocalReverse() {
+// 在头节点之前构建一个节点用于后续转换使用
+    const headPrevNode:SingleNode<any> = new SingleNode(-1);
+    const currentNode = this._head;
+    if (currentNode !== null) {
+      headPrevNode.next = currentNode;
+      this._tail = currentNode;
+      const preNode = headPrevNode.next;
+      let reverseNode = preNode.next;
+      while (reverseNode != null) {
+        preNode.next = reverseNode.next;
+        reverseNode.next = headPrevNode.next;
+        headPrevNode.next = reverseNode;
+        reverseNode = preNode.next;
+      }
+      // 头节点回归
+      this._head = headPrevNode.next;
+    }
+  }
+  /**
+   * 新建链表插入反转
+   */
+  private _newListReverse() {
+    const a = 2;
+    console.log(a);
+  }
+
 }

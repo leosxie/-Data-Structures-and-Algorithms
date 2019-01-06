@@ -247,6 +247,40 @@ export default class LinkList<T> {
     return toFindNode;
 
   }
+  findNodeIndex(nodeValue: T): number {
+    let toFindNode: Node<T> = new Node(nodeValue);
+    let currentNode = this._head;
+    let nodeIndex = -1;
+    let isFind = false;
+    if (!currentNode) {
+      return nodeIndex;
+    }
+
+    while (true) {
+
+      const isEqual = this.isEqual(toFindNode, currentNode);
+
+      if (isEqual) {
+        isFind = true;
+        toFindNode = currentNode;
+        break;
+      } else {
+        if (currentNode.next) {
+          currentNode = currentNode.next;
+        } else {
+          break;
+        }
+
+      }
+      nodeIndex += 1;
+
+    }
+    if (!isFind) {
+      nodeIndex = -1;
+    }
+    return nodeIndex;
+
+  }
   removeHead() {
     let currentNode = this._head;
     if (currentNode) {
