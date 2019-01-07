@@ -13,7 +13,7 @@ export interface SingleNodeProps<T>{
   data: T;
   next: SingleNode<T>;
 }
-
+export type ReverseType= 1 | 2 | 3 | 4;
 export default class SingleNodeList<T>{
   private _head: SingleNode<T> = null;
   private _tail: SingleNode<T> = null;
@@ -136,13 +136,17 @@ export default class SingleNodeList<T>{
 
   }
   /**
-   * @param type:number 反转的类型 1代表使用就地反转 2 代表使用新建链表插入反转
+   * @param type:number 反转的类型 1代表使用就地反转 2 代表使用新建链表插入反转，3 代表使用数组反转
    *  */
-  reverseList(type:number = 1) {
+  reverseList(type:ReverseType = 1) {
     if (type === 1) {
       this._LocalReverse();
-    }else {
+    }else if (type === 2) {
       this._newListReverse();
+    }else if (type === 3) {
+      this._arrayReverse();
+    }else if (type === 4) {
+      this._headAfterInsertReverse();
     }
   }
   /**
@@ -179,6 +183,68 @@ export default class SingleNodeList<T>{
   private _newListReverse() {
     const a = 2;
     console.log(a);
+  }
+  /**
+   * 数组逆序--缺点浪费空间，优点理解起来简单
+   */
+  private _arrayReverse() {
+    let currentNode = this._head;
+    // 将所有节点逆序存储在数组中
+    const nodeArray:SingleNode<T>[] = [];
+    while (currentNode !== null) {
+      nodeArray.unshift(currentNode);
+      currentNode = currentNode.next;
+    }
+    // 按照数组顺序新建
+    const nodeArrayLength = nodeArray.length;
+    nodeArray.forEach((node:SingleNode<T>, index:number) => {
+      // 第一个节点
+      if (index === 0) {
+        this._head = currentNode = node;
+      }else if (index === nodeArrayLength - 1) {
+        node.next = null;
+        currentNode.next = node;
+        this._tail = node;
+      }else {
+        currentNode.next = node;
+        currentNode = node;
+      }
+    });
+
+  }
+  /**
+   * 在头结点后后插入结点逆序
+   * 对于一条链表，从第2个节点到第N个节点，依次逐节点插入到第1个节点(head节点)之后，
+   * (N-1)次这样的操作结束之后将第1个节点挪到新表的表尾即可完成链表逆序
+   */
+  private _headAfterInsertReverse() {
+    const headNode = this._head; // 头结点
+    if (headNode === null) {
+      return false;
+    }
+    // 直到待插入的节点没有下一个值
+    const currentNode = headNode.next; // 第二个节点
+    while (currentNode.next) {
+      // 待反转的节点
+      const toReseverNode = currentNode.next;
+      // 头节点的下一个节点改为待反转节点
+      headNode.next = toReseverNode;
+      // 待反转的节点的下一个节点改为
+      toReseverNode.next = currentNode;
+      // 标准节点往下移一个节点
+      currentNode.next = toReseverNode.next;
+
+    }
+    // 当标准节点下面再无节点后
+    // 把头结点设为当前头节点的下一个节点
+    this._head = headNode.next;
+    // 把头节点移到最后
+    currentNode.next = headNode;
+    // 把头结点下一个节点置空
+    headNode.next = null;
+    // 把尾节点归位
+    this._tail = headNode;
+
   }
 
 }
