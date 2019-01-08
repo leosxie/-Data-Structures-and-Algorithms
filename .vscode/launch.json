@@ -8,6 +8,7 @@
         "name": "Debug Current TS File",
         "type": "node",
         "request": "launch",
+        "program": "${workspaceRoot}/node_modules/.bin/ts-node",
         "args": [
           "${relativeFile}"
         ],
@@ -17,10 +18,8 @@
           "ts-node/register"
         ],
         "sourceMaps": true,
-        "cwd": "${workspaceRoot}",
         "protocol": "inspector",
-        "console": "integratedTerminal",
-        "internalConsoleOptions": "neverOpen"
+        "console": "integratedTerminal"
       },
       {
         "name": "Debug by ts-node",

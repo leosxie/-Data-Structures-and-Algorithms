@@ -223,23 +223,27 @@ export default class SingleNodeList<T>{
       return false;
     }
     // 直到待插入的节点没有下一个值
-    const currentNode = headNode.next; // 第二个节点
-    while (currentNode.next) {
+    const moveNode = headNode.next; // 第二个节点需要一直维系
+    while (moveNode.next) {
+
+      const headNextNode = headNode.next;
       // 待反转的节点
-      const toReseverNode = currentNode.next;
+      const toReseverNode = moveNode.next;
+
+      // 移动节点的下一个节点先指定好
+      moveNode.next = toReseverNode.next;
+
       // 头节点的下一个节点改为待反转节点
       headNode.next = toReseverNode;
-      // 待反转的节点的下一个节点改为
-      toReseverNode.next = currentNode;
-      // 标准节点往下移一个节点
-      currentNode.next = toReseverNode.next;
+
+      toReseverNode.next = headNextNode;
 
     }
     // 当标准节点下面再无节点后
     // 把头结点设为当前头节点的下一个节点
     this._head = headNode.next;
     // 把头节点移到最后
-    currentNode.next = headNode;
+    moveNode.next = headNode;
     // 把头结点下一个节点置空
     headNode.next = null;
     // 把尾节点归位
