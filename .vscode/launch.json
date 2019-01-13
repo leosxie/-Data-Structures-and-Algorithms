@@ -10,34 +10,27 @@
         "request": "launch",
         "program": "${workspaceRoot}/node_modules/.bin/ts-node",
         "args": [
-          "${relativeFile}"
+          "${file}"
         ],
         "runtimeArgs": [
           "--nolazy",
           "-r",
           "ts-node/register"
         ],
+        "windows": {
+          "program": "${workspaceRoot}\\node_modules\\.bin\\ts-node.cmd"
+        },
+        "cwd": "${workspaceFolder}",
         "sourceMaps": true,
-        "protocol": "inspector",
-        "console": "integratedTerminal"
-      },
-      {
-        "name": "Debug by ts-node",
-        "type": "node",
-        "request": "launch",
-        "args": [
-          "${workspaceRoot}/src/index.ts"
-        ],
-        "runtimeArgs": [
-          "--nolazy",
-          "-r",
-          "ts-node/register"
-        ],
-        "sourceMaps": true,
-        "cwd": "${workspaceRoot}",
         "protocol": "inspector",
         "console": "integratedTerminal",
-        "internalConsoleOptions": "neverOpen"
+        "internalConsoleOptions": "openOnSessionStart",
+        "env": {
+          "TS_NODE_IGNORE":"false"
+        },
+        "outFiles": [
+          "${workspaceRoot}/lib/debugger"
+        ]
       },
       {
         "name": "Debug Current TS Tests File",
@@ -51,10 +44,14 @@
           "--colors",
           "-t 100000"
         ],
+        "windows": {
+          "program": "${workspaceRoot}\\node_modules\\.bin\\_mocha.cmd",
+        },
         "cwd": "${workspaceRoot}",
         "protocol": "inspector",
         "console": "integratedTerminal",
-        "internalConsoleOptions": "neverOpen"
+        "internalConsoleOptions": "openOnSessionStart",
+        "outFiles": []
       }
     ]
   }
