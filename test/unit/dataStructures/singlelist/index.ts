@@ -1,5 +1,5 @@
 
-import SingleList from '../../src/core/SingleList';
+import SingleList from '../../../../src/dataStructures/SingleList';
 const t = new SingleList(1, 2, 3, 4, 5, 6);
 // t.insert(3, 2);
 // t.print();

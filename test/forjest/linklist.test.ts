@@ -1,4 +1,4 @@
-import LinkList, { Node } from '../src/core/LinkList';
+import LinkList, { Node } from '../../src/dataStructures/LinkList';
 const t = new LinkList(1, 2, 4, 6);
 test('找到了节点', () => {
   const findNode:Node<number> = t.findNode(2) as Node<number>;
