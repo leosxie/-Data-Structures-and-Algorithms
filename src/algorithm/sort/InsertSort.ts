@@ -1,16 +1,20 @@
 /**
+ * 局部有序的数组很适合插入排序
  * 插入排序
- * 插入排序是在一个已经有序的小序列的基础上，一次插入一个元素。当然，刚开始这个有序的小序列只有1个元素，也就是第一个元素（默认它有序）。
-比较是从有序序列的末尾开始，也就是把待插入的元素和已经有序的最大者开始比起，如果比它大则直接插入在其后面。
-否则一直往前找直到找到它该插入的位置。如果遇见一个与插入元素相等的，那么把待插入的元素放在相等元素的后面。
-所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序仍是排好序后的顺序，所以插入排序是稳定的。
  */
-export default class InsertSortInsertSort{
-  static sort(arr:number[]) {
+import * as _ from 'lodash';
+export default class InsertSort{
+  /**
+   * 直接插入排序for循环版本
+   * @param passArray
+   * @param print 是否打印执行时间
+   */
+  static sort(passArray:number[], print:boolean = false) {
+    const arr = _.cloneDeep(passArray);
     if (arr.length < 2) {
       return arr;
     }
-
+    const start = new Date().getTime();
     for (let i = 1; i < arr.length; i++) {
       // console.log('i: ', i);
       const temp = arr[i];
@@ -24,13 +28,23 @@ export default class InsertSortInsertSort{
       }
       arr[j + 1] = temp;
     }
+    const end = new Date().getTime();
+    if (print) {
+      console.log('InsertSort sort', end - start, 'ms');
+    }
     return arr;
   }
-  static sort1(arr:number[]) {
+  /**
+   * 直接插入循环while循环
+   * @param passArray
+   * @param print
+   */
+  static sort1(passArray:number[], print:boolean = false) {
+    const arr = _.cloneDeep(passArray);
     if (arr.length < 2) {
       return arr;
     }
-
+    const start = new Date().getTime();
     for (let i = 1; i < arr.length; i++) {
       // console.log('i: ', i);
       const temp = arr[i];
@@ -42,6 +56,80 @@ export default class InsertSortInsertSort{
       arr[j + 1] = temp;
       // console.log(arr);
     }
+    const end = new Date().getTime();
+    if (print) {
+      console.log('InsertSort sort1 排序时间：', end - start, 'ms');
+    }
     return arr;
+  }
+  /**
+   * 二分查找插入排序
+   * 从第一个元素开始，该元素可以认为已经被排序；
+    取出下一个元素，在已经排序的元素序列中二分查找到第一个比它大的数的位置；
+    将新元素插入到该位置后；
+    重复上述两步
+   * @param arr
+   */
+  static binarySearchInsertSort(passArray:number[], print:boolean = false) {
+    const arr = _.cloneDeep(passArray);
+    const start = new Date().getTime();
+    for (let i = 1; i < arr.length; i++) {
+      const key:number = arr[i];
+      let left:number = 0; // 最低区间
+      let  right:number = i - 1; // 最高区间
+      while (left <= right) {
+        // 取中间位置
+        const middle = parseInt(`${(left + right) / 2}`, 10);
+        // 如果取的值小于中间位置的值，就缩小最高区间，相反就提高最低区间位置
+        if (key < arr[middle]) {
+          right = middle - 1;
+        } else {
+          left = middle + 1;
+        }
+      }
+
+      // 移动数据，以最低区间为准
+      for (let j = i - 1; j >= left; j--) {
+        arr[j + 1] = arr[j];
+      }
+      // 把数据放到最低区间的位置
+      arr[left] = key;
+    }
+    const end = new Date().getTime();
+    if (print) {
+      console.log('binarySearchInsertSort排序时间：', end - start, 'ms');
+    }
+    return arr;
+  }
+  /**
+   * 希尔排序-增量排序
+   * @param passArray
+   */
+  static shellSort(passArray:number[], print:boolean = false) {
+    const arr:number[] = _.cloneDeep(passArray);
+    const start = new Date().getTime();
+    let gap = Math.round(arr.length / 2);
+    for (; gap > 0; Math.round(gap /= 2)) {
+
+      for (let i = gap; i < arr.length; i++) {
+        let j = i;
+        const temp = arr[j];
+        if (arr[j] < arr[j - gap]) {
+          while (j - gap >= 0 && temp < arr[j - gap]) {
+            arr[j] = arr[j - gap];
+            j -= gap;
+          }
+          arr[j] = temp;
+        }
+      }
+
+    }
+    const end = new Date().getTime();
+
+    if (print) {
+      console.log('shellSort排序时间：', end - start, 'ms');
+    }
+    return arr;
+
   }
 }

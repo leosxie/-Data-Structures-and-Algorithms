@@ -10,9 +10,12 @@
    交换数据比比较数据所需要的时间多很多
 
  */
+import * as _ from 'lodash';
 export default class SelectSort{
-  static sort(arr:number[]) {
+  static sort(passArray:number[], print:boolean = false) {
+    const arr = _.cloneDeep(passArray);
     if (arr.length <= 1) return;
+    const start = new Date().getTime();
     // 需要注意这里的边界, 因为需要在内层进行 i+1后的循环，所以外层需要 数组长度-1
     for (let i = 0; i < arr.length - 1; i++) {
       let minIndex = i;
@@ -28,6 +31,11 @@ export default class SelectSort{
         arr[minIndex] = temp;
       }
 
+    }
+    const end = new Date().getTime();
+
+    if (print) {
+      console.log('SelectSort 排序时间：', end - start, 'ms');
     }
     return arr;
   }

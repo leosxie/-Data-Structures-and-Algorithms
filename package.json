@@ -15,10 +15,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^10.12.18"
+    "@types/node": "^10.12.18",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@types/jest": "^23.3.11",
+    "@types/lodash": "^4.14.120",
     "chai": "^4.2.0",
     "jest": "^23.6.0",
     "mocha": "^5.2.0",

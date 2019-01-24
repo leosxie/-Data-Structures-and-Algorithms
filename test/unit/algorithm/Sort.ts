@@ -1,15 +1,15 @@
 import { BubbleSort, InsertSort, SelectSort } from '../../../src/algorithm/index';
-let data  = [6, 4, 5, 3, 10, 8, 7];
-let sortResult =  BubbleSort.sort(data);
-
-console.log(sortResult);
-
-data = [6, 4, 5, 3, 3, 10, 8, 7];
-sortResult =  InsertSort.sort(data);
-
-console.log(sortResult);
-
-data = [6, 4, 5, 3, 10, 8, 7];
-sortResult =  SelectSort.sort(data);
-
-console.log(sortResult);
+const data  = [];
+const numLen = 10000;
+const min = 1;
+const max = 100000;
+for (let i = 0; i < numLen; i++) {
+  const random =  Math.round(Math.random() * (max - min + 1) + min);
+  data.push(random);
+}
+BubbleSort.sort(data, true);
+InsertSort.binarySearchInsertSort(data, true);
+InsertSort.sort(data, true);
+InsertSort.sort1(data, true);
+InsertSort.shellSort(data, true);
+SelectSort.sort(data, true);

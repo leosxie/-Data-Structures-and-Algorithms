@@ -1,11 +1,15 @@
 /**
  * 冒泡排序
  */
+import * as _ from 'lodash';
 export default class BubbleSort{
-  static sort(arr:number[]):number[] {
+  static sort(passArray:number[], print:boolean = false):number[] {
+    const arr = _.cloneDeep(passArray);
+
     if (arr == null || arr.length === 0) {
       return ;
     }
+    const start = new Date().getTime();
     for (let i = 1; i <= arr.length - 1; i++) {
       let flag:boolean = true;
       for (let j = 0; j <= arr.length - 1; j++) {
@@ -17,6 +21,10 @@ export default class BubbleSort{
       if (flag) {
         break;
       }
+    }
+    const end = new Date().getTime();
+    if (print) {
+      console.log('BubbleSort排序时间：', end - start, 'ms');
     }
     return arr;
   }
