@@ -19,14 +19,13 @@ export default class InsertSort{
       // console.log('i: ', i);
       const temp = arr[i];
       let j = i - 1;
-      for (; j >= 0; j--) {
-        if (arr[j] > temp) {
-          arr[j + 1] = arr[j];
-        }else {
-          break;
-        }
+      for (; j >= 0 && arr[j] > temp; j--) {
+        arr[j + 1] = arr[j];
       }
-      arr[j + 1] = temp;
+      if (i !== j + 1) {
+        arr[j + 1] = temp;
+      }
+
     }
     const end = new Date().getTime();
     if (print) {
@@ -108,8 +107,11 @@ export default class InsertSort{
   static shellSort(passArray:number[], print:boolean = false) {
     const arr:number[] = _.cloneDeep(passArray);
     const start = new Date().getTime();
-    let gap = Math.round(arr.length / 2);
-    for (; gap > 0; Math.round(gap /= 2)) {
+    // 步长
+    const step = 3;
+    let gap = Math.round(arr.length / step);
+
+    for (; gap > 0; gap = Math.round(gap / step)) {
 
       for (let i = gap; i < arr.length; i++) {
         let j = i;

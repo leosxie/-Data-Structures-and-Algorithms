@@ -9,7 +9,7 @@ export default class BubbleSort{
     if (arr == null || arr.length === 0) {
       return ;
     }
-    const start = new Date().getTime();
+    console.time('BubbleSort');
     for (let i = 1; i <= arr.length - 1; i++) {
       let flag:boolean = true;
       for (let j = 0; j <= arr.length - 1; j++) {
@@ -22,9 +22,8 @@ export default class BubbleSort{
         break;
       }
     }
-    const end = new Date().getTime();
     if (print) {
-      console.log('BubbleSort排序时间：', end - start, 'ms');
+      console.timeEnd('BubbleSort');
     }
     return arr;
   }
