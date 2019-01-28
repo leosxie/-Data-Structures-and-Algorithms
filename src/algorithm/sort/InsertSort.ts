@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 export default class InsertSort{
   /**
    * 直接插入排序for循环版本
+   * 数据量特别大的时候，超级占用内存
    * @param passArray
    * @param print 是否打印执行时间
    */
@@ -126,6 +127,57 @@ export default class InsertSort{
       }
 
     }
+    const end = new Date().getTime();
+
+    if (print) {
+      console.log('shellSort排序时间：', end - start, 'ms');
+    }
+    return arr;
+
+  }
+  /**
+   * 经过测试分析：在大数据量的时候希尔排序的while循环要更快
+   * @param passArray
+   * @param print
+   */
+  static shellSortUseFor(passArray:number[], print:boolean = false) {
+    const arr:number[] = _.cloneDeep(passArray);
+    const start = new Date().getTime();
+    // 步长
+    const step = 3;
+    let gap = Math.round(arr.length / step);
+
+    for (; gap > 0; gap = Math.round(gap / step)) {
+
+      for (let i = gap; i < arr.length; i++) {
+        let j = i - gap;
+        const temp = arr[i];
+        for (; j >= 0 && arr[j] > temp; j -= gap) {
+          arr[j + gap] = arr[j];
+        }
+        arr[j + gap] = temp;
+
+      }
+
+    }
+    const end = new Date().getTime();
+
+    if (print) {
+      console.log('shellSort use for排序时间：', end - start, 'ms');
+    }
+    return arr;
+
+  }
+  /**
+   * 插入排序适合小数据量且最后有序
+   * 希尔排序的二分实现
+   * @param passArray 数组
+   * @param print 打印
+   */
+  static shellSortUseForWithBinarySearch(passArray:number[], print:boolean = false) {
+    const arr:number[] = _.cloneDeep(passArray);
+    const start = new Date().getTime();
+
     const end = new Date().getTime();
 
     if (print) {
