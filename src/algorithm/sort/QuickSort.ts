@@ -41,11 +41,12 @@ export default class QuickSort<T>{
     let pivot;
     if (low  < heigh) {
       pivot = this.part(data, low, heigh);
+      this.quickSort(data, low, pivot - 1);
+      this.quickSort(data, pivot + 1, heigh);
     }else {
       return ;
     }
-    this.quickSort(data, low, pivot - 1);
-    this.quickSort(data, pivot + 1, heigh);
+
   }
   private sortNewPatition(a:T[], alow:number,   ahigh:number):number {
     let low = alow;
@@ -54,7 +55,7 @@ export default class QuickSort<T>{
     const pivotkey = a[low];
     while (low < high) {
       // 从序列的右边开始往左遍历，直到找到小于基准值的元素
-      while (high > low && a[high] >= pivotkey) {
+      while (low < high && a[high] >= pivotkey) {
           high--;
       }
       // 将元素直接赋予给左边第一个，即pivotkey所在的位置
