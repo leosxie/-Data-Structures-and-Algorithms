@@ -17,11 +17,26 @@ export default class Recursion{
     return this.fB(n - 1) + this.fB(n - 2);
 
   }
+  // 尾递归--核心缓存结果，不会堆栈溢出，因为只有一层保留
+  static fibTailRecursion(n:number, first:number, second:number):number {
+    if (n === 0) {
+      return first;
+    }
+    return Recursion.fibTailRecursion(n - 1, second, first + second);
+  }
   static fBNotRecursion(n:number):number {
     if (n === 1 || n === 2) {
       return n;
     }
-    return 0;
+    let first = 0;
+    let second = 1;
+    let third = 0;
+    for (let i = 2; i <= n; i++) {
+      third = first + second;
+      first = second;
+      second = third;
+    }
+    return third;
   }
   // 是否已经结算
   private static hasCal:{
